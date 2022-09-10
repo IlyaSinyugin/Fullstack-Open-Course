@@ -40,6 +40,7 @@ const App = () => {
       <Button handleClick={handleSelected} text="next anecdote" />
       <h1>Anecdote with most votes</h1>
       <p> {anecdotes[votes.indexOf(Math.max(...votes))]}</p>
+      <p>has {votes[votes.indexOf(Math.max(...votes))]} votes</p>
     </div>
   );
 };
