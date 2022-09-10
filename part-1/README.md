@@ -1,1 +1,1 @@
-The Homework submissions are in files: courseinfo, unicafe
+The Homework submissions are in files: courseinfo, unicafe, anecdotes
