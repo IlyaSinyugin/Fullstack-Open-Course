@@ -1,12 +1,14 @@
 import { useState, useEffect } from "react";
 import personsService from "./services/persons";
 
-// const Person = (person) => {
-//   return
-//     (<div>
-//       {person.name}
-//     </div>)
-// };
+const Person = ({ person, toggleRemoval }) => {
+  return (
+    <div>
+      {person.name} {person.number}{" "}
+      <button onClick={toggleRemoval}>delete</button>
+    </div>
+  );
+};
 
 const Filter = (props) => {
   return (
@@ -33,17 +35,6 @@ const PersonForm = (props) => {
   );
 };
 
-const Persons = ({ personsToShow }) => {
-  return (
-    <div>
-      {personsToShow.map((person) => (
-        <div key={person.name}>
-          {person.name} {person.number}
-        </div>
-      ))}
-    </div>
-  );
-};
 const App = () => {
   const [persons, setPersons] = useState([]);
   const [newName, setNewName] = useState("");
@@ -70,6 +61,17 @@ const App = () => {
         setPersons(persons.concat(response.data));
       });
     }
+  };
+
+  const toggleRemovalOf = (id) => {
+    console.log("this person " + id + " needs to be removed");
+    personsService.remove(id).then(() => {
+      setPersons((persons) =>
+        persons.filter((person) => {
+          return person.id !== id;
+        })
+      );
+    });
   };
 
   const handleNameChange = (event) => {
@@ -103,7 +105,15 @@ const App = () => {
         handleNumberChange={handleNumberChange}
       />
       <h2>Numbers</h2>
-      <Persons personsToShow={personsToShow} />
+      {personsToShow.map((person) => (
+        <div key={person.name}>
+          <Person
+            key={person.name}
+            person={person}
+            toggleRemoval={() => toggleRemovalOf(person.id)}
+          />
+        </div>
+      ))}
     </div>
   );
 };
