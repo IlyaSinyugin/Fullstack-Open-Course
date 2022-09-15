@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
+import personsService from "./services/persons";
 
 // const Person = (person) => {
 //   return
@@ -52,8 +52,7 @@ const App = () => {
 
   useEffect(() => {
     console.log("effect");
-    axios.get("http://localhost:3001/persons").then((response) => {
-      console.log("promise fulfilled");
+    personsService.getAll().then((response) => {
       setPersons(response.data);
     });
   }, []);
@@ -67,7 +66,9 @@ const App = () => {
     if (persons.filter((person) => person.name === newName).length > 0) {
       alert(`${newName} is already added to phonebook`);
     } else {
-      setPersons(persons.concat(personObject));
+      personsService.create(personObject).then((response) => {
+        setPersons(persons.concat(response.data));
+      });
     }
   };
 
