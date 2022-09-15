@@ -110,7 +110,11 @@ const App = () => {
           <Person
             key={person.name}
             person={person}
-            toggleRemoval={() => toggleRemovalOf(person.id)}
+            toggleRemoval={() =>
+              window.confirm(`Delete ${person.name}?`)
+                ? toggleRemovalOf(person.id)
+                : console.log("action stopped")
+            }
           />
         </div>
       ))}
