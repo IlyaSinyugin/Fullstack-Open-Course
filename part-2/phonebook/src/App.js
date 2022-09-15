@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import personsService from "./services/persons";
+import Notification from "./components/Notification";
 
 const Person = ({ person, toggleRemoval }) => {
   return (
@@ -40,6 +41,7 @@ const App = () => {
   const [newName, setNewName] = useState("");
   const [newNumber, setNewNumber] = useState("");
   const [filter, setFilter] = useState("");
+  const [message, setMessage] = useState(null);
 
   useEffect(() => {
     console.log("effect");
@@ -60,6 +62,10 @@ const App = () => {
       personsService.create(personObject).then((response) => {
         setPersons(persons.concat(response.data));
       });
+      setMessage(`Added ${newName}`);
+      setTimeout(() => {
+        setMessage(null);
+      }, 5000);
     }
   };
 
@@ -96,6 +102,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+      <Notification message={message} />
       <Filter handleFilter={handleFilter} />
       <PersonForm
         addPerson={addPerson}
