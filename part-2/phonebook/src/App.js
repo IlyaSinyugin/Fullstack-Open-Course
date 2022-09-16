@@ -56,8 +56,22 @@ const App = () => {
       name: newName,
       number: newNumber,
     };
-    if (persons.filter((person) => person.name === newName).length > 0) {
-      alert(`${newName} is already added to phonebook`);
+    const onePerson = persons.filter((person) => person.name === newName);
+    if (onePerson.length > 0) {
+      console.log(onePerson[0].id);
+      window.confirm(
+        `${newName} is already added ot phonebook, replace the old number with a new one?`
+      )
+        ? personsService
+            .update(onePerson[0].id, {
+              name: newName,
+              number: newNumber,
+            })
+            .then(() => {
+              const changedPersons = { ...persons, number: newNumber };
+              setPersons(changedPersons);
+            })
+        : console.log("action stopped");
     } else {
       personsService.create(personObject).then((response) => {
         setPersons(persons.concat(response.data));
@@ -95,7 +109,7 @@ const App = () => {
   const personsToShow =
     persons.length === 0
       ? persons
-      : persons.filter((person) =>
+      : Object.values(persons).filter((person) =>
           person.name.toUpperCase().includes(filter.toUpperCase())
         );
 
@@ -112,6 +126,11 @@ const App = () => {
         handleNumberChange={handleNumberChange}
       />
       <h2>Numbers</h2>
+      {console.log(
+        Object.values(persons).filter((person) =>
+          person.name.toUpperCase().includes(filter.toUpperCase())
+        )
+      )}
       {personsToShow.map((person) => (
         <div key={person.name}>
           <Person
