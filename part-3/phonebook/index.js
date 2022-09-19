@@ -3,7 +3,7 @@ const app = express();
 
 app.use(express.json()); // access the data with json parser
 
-let phonebook = [
+let persons = [
   {
     id: 1,
     name: "Arto Hellas",
@@ -31,14 +31,31 @@ app.get("/", (request, response) => {
 });
 
 app.get("/api/persons", (request, response) => {
-  response.json(phonebook);
+  response.json(persons);
+});
+
+app.get("/api/persons/:id", (request, response) => {
+  const id = Number(request.params.id);
+  const person = persons.find((person) => person.id === id);
+
+  if (person) {
+    response.json(person);
+  } else {
+    response.status(404).end();
+  }
 });
 
 app.get("/info", (request, response) => {
   const date = new Date();
-  console.log(`Phonebook has info for ${phonebook.length} people`);
-  response.send(`<div>Phonebook has info for ${phonebook.length} people</div>
+  console.log(`Phonebook has info for ${persons.length} people`);
+  response.send(`<div>Phonebook has info for ${persons.length} people</div>
   <div>${date}</div>`);
+});
+
+app.delete("/api/persons/:id", (request, response) => {
+  const id = Number(request.params.id);
+  persons = persons.filter((person) => person.id !== id);
+  response.status(204).end();
 });
 
 const PORT = 3001;
