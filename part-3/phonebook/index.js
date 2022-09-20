@@ -26,8 +26,10 @@ let persons = [
     number: "39-23-6423122",
   },
 ];
+// custom token
+morgan.token("body", (req, res) => JSON.stringify(req.body));
 
-app.use(morgan("tiny")); // implemented morgan for logging
+app.use(morgan(":method :url :status :response-time ms  :body "));
 
 app.get("/", (request, response) => {
   response.send("<h1>Hello World!</h1>");
