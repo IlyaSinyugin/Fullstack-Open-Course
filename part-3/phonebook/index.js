@@ -1,5 +1,6 @@
 const express = require("express");
 const app = express();
+var morgan = require("morgan");
 
 app.use(express.json()); // access the data with json parser
 
@@ -25,6 +26,8 @@ let persons = [
     number: "39-23-6423122",
   },
 ];
+
+app.use(morgan("tiny")); // implemented morgan for logging
 
 app.get("/", (request, response) => {
   response.send("<h1>Hello World!</h1>");
