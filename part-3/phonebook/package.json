@@ -11,6 +11,7 @@
   "author": "ilya",
   "license": "ISC",
   "dependencies": {
+    "morgan": "^1.10.0",
     "nodemon": "^2.0.20"
   },
   "devDependencies": {
