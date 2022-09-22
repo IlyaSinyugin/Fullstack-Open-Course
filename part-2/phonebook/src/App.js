@@ -68,7 +68,14 @@ const App = () => {
               number: newNumber,
             })
             .then(() => {
-              const changedPersons = { ...persons, number: newNumber };
+              const changedPersons = persons.map((person) => {
+                if (person.name === newName) {
+                  return { ...person, number: newNumber };
+                }
+                return person;
+              });
+              console.log("Persons set to " + Object.values(changedPersons));
+
               setPersons(changedPersons);
             })
         : console.log("action stopped");
