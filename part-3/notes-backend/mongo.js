@@ -11,24 +11,22 @@ const password = process.argv[2];
 
 const url = `mongodb+srv://fullstack:${password}@cluster0.beu5aww.mongodb.net/noteApp?retryWrites=true&w=majority`;
 
-mongoose.connect(url);
+mongoose.connect(url, { useNewUrlParser: true });
 
-const noteSchema = new mongoose.Schema({
+const Note = mongoose.model("Note", {
   content: String,
   date: Date,
   important: Boolean,
 });
 
-const Note = mongoose.model("Note", noteSchema);
-
 const note = new Note({
-  content: "CSS is hard",
+  content: "Promise auttaa asynkronisissa operaatiossa",
   date: new Date(),
   important: false,
 });
 
 if (false) {
-  note.save().then((result) => {
+  note.save().then((response) => {
     console.log("note saved!");
     mongoose.connection.close();
   });
