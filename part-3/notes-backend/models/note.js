@@ -1,6 +1,8 @@
 require("dotenv").config();
 const mongoose = require("mongoose");
 
+mongoose.set("useFindAndModify", false);
+
 const url = process.env.MONGODB_URI;
 
 console.log("connecting to", url);
@@ -17,7 +19,7 @@ mongoose
 const noteSchema = new mongoose.Schema({
   content: {
     type: String,
-    mingLength: 5,
+    minLength: 5,
     required: true,
   },
   date: {
