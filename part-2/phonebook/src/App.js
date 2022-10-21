@@ -80,13 +80,26 @@ const App = () => {
             })
         : console.log("action stopped");
     } else {
-      personsService.create(personObject).then((response) => {
-        setPersons(persons.concat(response.data));
-      });
-      setMessage(`Added ${newName}`);
-      setTimeout(() => {
-        setMessage(null);
-      }, 5000);
+      console.log(`length of a newName is: ${newName.length}`);
+      console.log(`Is it shorter than required? -  ${newName.length < 3}`);
+
+      if (newName.length < 3) {
+        console.log("i am ehre");
+        setMessage(
+          `Person validation failed: name ${newName} is shorter than the minimum allowed length (3)`
+        );
+        setTimeout(() => {
+          setMessage(null);
+        }, 5000);
+      } else {
+        personsService.create(personObject).then((response) => {
+          setPersons(persons.concat(response.data));
+        });
+        setMessage(`Added ${newName}`);
+        setTimeout(() => {
+          setMessage(null);
+        }, 5000);
+      }
     }
   };
 
