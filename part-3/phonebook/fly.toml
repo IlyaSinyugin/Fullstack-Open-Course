@@ -1,6 +1,6 @@
-# fly.toml file generated for twilight-leaf-8017 on 2022-09-22T12:01:33+02:00
+# fly.toml file generated for still-shadow-1511 on 2022-10-21T11:01:11+02:00
 
-app = "twilight-leaf-8017"
+app = "still-shadow-1511"
 kill_signal = "SIGINT"
 kill_timeout = 5
 processes = []
